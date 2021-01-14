@@ -1,7 +1,7 @@
 {
-  "name": "unit10hw",
+  "name": "ms-interconnect",
   "version": "1.0.0",
-  "description": "OOP and testing for week 10 homework",
+  "description": "Interconnect generator",
   "main": "app.js",
   "directories": {
     "lib": "lib",
@@ -12,18 +12,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevetrilogy/unit10hw.git"
+    "url": "git+https://github.com/brhestir/ms-interconnect.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Brian Hestir",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stevetrilogy/unit10hw/issues"
+    "url": "https://github.com/brhestir/ms-interconnect/issues"
   },
-  "homepage": "https://github.com/stevetrilogy/unit10hw#readme",
+  "homepage": "https://github.com/brhestir/ms-interconnect#readme",
   "dependencies": {
-    "inquirer": "^6.3.1"
+    "inquirer": "^7.3.3"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "jest": "^26.6.3"
   }
 }
