@@ -96,51 +96,80 @@ const employeeArray = new Array();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 const promptUser = (questions) => {
-    inquirer.prompt(questions).then( (answers) => {
-        // This is executed for each question immediately after it is answered
-        switch(answers.roleType) {
-            case 'Employee':
-                employeeArray.push(new Employee(answers.roleName, answers.roleId, answers.roleEmail));  // create new Employee object
-            break;
-            case 'Engineer':
-                employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleGitHubUserName));  // create new Employee object
-            break;
-            case 'Intern':
-                employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleSchoolName));  // create new Employee object
-            break;
-            case 'Manager':
-                employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleOfficeNum));  // create new Employee object
-            break;
-        }
-
-        // If the user wants to enter another role, make recursive call to promptUser
-        if (answers.promptAgain) {
-            promptUser(questions);
-        }
-        else {
-            console.log("------------------------");
-            console.log("Done entering questions!");
-            console.log("------------------------");
-            console.log(employeeArray);
-            console.log("------------------------");
-            console.log("Calling render function...");
-
-            // After the user has input all employees desired, call the `render` function (required
-            // above) and pass in an array containing all employee objects; the `render` function will
-            // generate and return a block of HTML including templated divs for each employee!
-            //render(employeeArray);
-        }
-    });
+    inquirer.prompt(questions)
+    .then( answers => parseAnswers(answers, questions) )
+    .then( result => processRenderedHTML(result) )
+    .then( finalResult => {
+        
+    })
 };
+
+function parseAnswers(answers, questions) {
+    // This is executed for each question immediately after it is answered
+    switch(answers.roleType) {
+        case 'Employee':
+            employeeArray.push(new Employee(answers.roleName, answers.roleId, answers.roleEmail));  // create new Employee object
+        break;
+        case 'Engineer':
+            employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleGitHubUserName));  // create new Employee object
+        break;
+        case 'Intern':
+            employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleSchoolName));  // create new Employee object
+        break;
+        case 'Manager':
+            employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleOfficeNum));  // create new Employee object
+        break;
+    }
+
+    // If the user wants to enter another role, make recursive call to promptUser
+    if (answers.promptAgain) {
+        promptUser(questions);
+        return false;
+    }
+    else {
+        
+        // After the user has input all employees desired, call the `render` function (required
+        // above) and pass in an array containing all employee objects; the `render` function will
+        // generate and return a block of HTML including templated divs for each employee!
+        //return render(employeeArray);   // return the rendered HTML;
+        return true;
+    }
+}
+
+function processRenderedHTML(result) {
+    // After you have your html, you're now ready to create an HTML file using the HTML
+    // returned from the `render` function. Now write it to a file named `team.html` in the
+    // `output` folder. You can use the variable `outputPath` above target this location.
+    // Hint: you may need to check if the `output` folder exists and create it if it
+    // does not.
+    if(result){
+        // This path is called when result == true from previous .then in the chain (i.e. done entering roles)
+        //console.log('return was TRUE');
+        let renderedHTML = render(employeeArray);
+        
+        let fullPath = [];
+        fullPath.push(outputPath);
+        fullPath.push('team.html')
+        fullPath.join('/');
+        
+        fs.writeFile(fullPath[0], renderedHTML, (err) => {
+            err ? console.log(err) : console.log(fullPath[0] + " written successfully.");
+        });
+    
+    } 
+    else
+    { 
+        // This path is called when result == false from previous .then in the chain (i.e. entering more roles)
+        // i.e. do nothing (or perhaps return a return value if necessary)
+        //console.log('return was FALSE');
+    }
+
+}
 
 promptUser(questionArray);
 
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
+
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
