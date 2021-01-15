@@ -1,0 +1,13 @@
+/* style.css */
+
+.employee-card {
+    margin: 10px 10px 10px 10px;
+}
+
+.team-heading {
+    background-color: rgb(236, 161, 99);
+}
+
+body {
+    background-color:rgb(255, 255, 255);
+}
