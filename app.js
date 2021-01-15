@@ -144,16 +144,21 @@ function processRenderedHTML(result) {
     // does not.
     if(result){
         // This path is called when result == true from previous .then in the chain (i.e. done entering roles)
-        //console.log('return was TRUE');
         let renderedHTML = render(employeeArray);
         
-        let fullPath = [];
-        fullPath.push(outputPath);
-        fullPath.push('team.html')
-        fullPath.join('/');
-        
-        fs.writeFile(fullPath[0], renderedHTML, (err) => {
-            err ? console.log(err) : console.log(fullPath[0] + " written successfully.");
+        console.log(`[i] Target output path: ${path.dirname(outputPath)}`);
+
+        // Check if output path exists and create if it does not exist
+        if(!(fs.existsSync(path.dirname(outputPath)))) {
+            // Path does not exist -> create path and then proceed
+            console.log(`[i] Path does not exist... creating path`);
+            fs.mkdirSync(path.dirname(outputPath));
+            console.log(`[+] mkDir OK: ${path.dirname(outputPath)}`);
+        }
+    
+              
+        fs.writeFile(outputPath, renderedHTML, (err) => {
+            err ? console.log(err) : console.log(`[+] wFile OK: ${outputPath}`);
         });
     
     } 
@@ -167,16 +172,3 @@ function processRenderedHTML(result) {
 }
 
 promptUser(questionArray);
-
-
-
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
