@@ -23,7 +23,8 @@ var questionArray = [
             "Engineer",
             "Intern",
             "Manager",
-        ],    
+        ],
+        default: "Manager"    
     },
     {
         name: 'roleName',
@@ -144,8 +145,6 @@ function processRenderedHTML(result) {
     // does not.
     if(result){
         // This path is called when result == true from previous .then in the chain (i.e. done entering roles)
-
-        console.log(employeeArray);
 
         let renderedHTML = render(employeeArray);
         
