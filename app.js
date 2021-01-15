@@ -114,10 +114,10 @@ function parseAnswers(answers, questions) {
             employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleGitHubUserName));  // create new Employee object
         break;
         case 'Intern':
-            employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleSchoolName));  // create new Employee object
+            employeeArray.push(new Intern(answers.roleName, answers.roleId, answers.roleEmail, answers.roleSchoolName));  // create new Employee object
         break;
         case 'Manager':
-            employeeArray.push(new Engineer(answers.roleName, answers.roleId, answers.roleEmail, answers.roleOfficeNum));  // create new Employee object
+            employeeArray.push(new Manager(answers.roleName, answers.roleId, answers.roleEmail, answers.roleOfficeNum));  // create new Employee object
         break;
     }
 
@@ -144,6 +144,9 @@ function processRenderedHTML(result) {
     // does not.
     if(result){
         // This path is called when result == true from previous .then in the chain (i.e. done entering roles)
+
+        console.log(employeeArray);
+
         let renderedHTML = render(employeeArray);
         
         console.log(`[i] Target output path: ${path.dirname(outputPath)}`);
