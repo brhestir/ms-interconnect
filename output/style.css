@@ -9,5 +9,9 @@
 }
 
 body {
-    background-color:rgb(255, 255, 255);
+    background-color:rgb(253, 246, 255);
+}
+
+.card-header {
+    background-color: rgb(241, 196, 158);
 }
